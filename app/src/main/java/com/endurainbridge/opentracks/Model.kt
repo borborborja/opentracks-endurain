@@ -14,6 +14,7 @@ data class TrackSummary(
  * markers, sensor-only points); those start a new GPX segment.
  */
 data class TrackPointData(
+    val type: Int?,
     val latitude: Double?,
     val longitude: Double?,
     val timeEpochMs: Long?,

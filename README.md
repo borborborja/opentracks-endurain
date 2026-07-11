@@ -34,7 +34,11 @@ the device. Every request also sends the mandatory `X-Client-Type: mobile` heade
    **API key**, tap **Probar conexión** to sanity-check reachability, then **Guardar**.
 3. In **OpenTracks**: Settings → enable the **Data API**, then Settings → **Dashboard** → select
    **Endurain Bridge**.
-4. Record an activity. When you stop and open its dashboard, the track uploads automatically.
+4. Record an activity. Two ways it uploads:
+   - **Auto (recommended):** during the recording, tap OpenTracks' **⋮ → Show on map** once. Nothing
+     visible opens, but a foreground service now watches the recording; when you **Stop**, the track
+     uploads by itself — no need to reopen anything.
+   - **Manual:** after stopping, open the finished track and tap **⋮ → Show on map**; it uploads then.
 
 > **Duplicates:** Endurain does *not* deduplicate uploads server-side — re-uploading a file creates a
 > hidden duplicate activity. This app keeps a local ledger of uploaded OpenTracks track UUIDs and
@@ -74,11 +78,24 @@ sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 To verify the Endurain upload path in isolation: on the settings screen, **long-press “Probar
 conexión”** to pick a `.gpx` file and upload it directly through the same WorkManager path.
 
+## Auto-upload on stop (how M4 works)
+
+OpenTracks does **not** notify a dashboard when recording stops, exposes no recording-status IPC,
+and its URI read grant is non-persistable and dies with the receiving component. So auto-upload works
+like this:
+
+- Tapping **Show on map** during a recording launches the (invisible) `DashboardReceiverActivity`
+  with `is_recording = true`. It forwards the track/trackpoints URIs — *and the read grant* — to
+  `RecordingWatchService`, a `specialUse` foreground service, then finishes.
+- The service holds the grant, observes the trackpoints URI, and treats a **trailing
+  `SEGMENT_END_MANUAL` (type 1) trackpoint as "recording stopped"** (confirmed from OpenTracks source;
+  there is no pause feature, so this is unambiguous — `IDLE` is not a stop).
+- On stop it reads the full track, writes GPX, enqueues the `UploadWorker`, and stops itself.
+
 ## Roadmap
 
-- **M4 (not yet built):** live-recording auto-upload via a foreground service that holds the URI
-  grant until recording ends; optional Vía A (Android share-sheet) entry point; mapping OpenTracks
-  categories → Endurain numeric activity types via `PUT /api/v1/activities/edit`.
+- Optional Vía A (Android share-sheet) entry point.
+- Mapping OpenTracks categories → Endurain numeric activity types via `PUT /api/v1/activities/edit`.
 
 ## Key API facts (confirmed from source)
 

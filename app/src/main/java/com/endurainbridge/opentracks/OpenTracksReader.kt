@@ -31,6 +31,7 @@ class OpenTracksReader(private val resolver: ContentResolver) {
             while (c.moveToNext()) {
                 points.add(
                     TrackPointData(
+                        type = c.intOrNull(OpenTracksContract.TrackPoint.TYPE),
                         // OpenTracks stores lat/lon as microdegrees (int * 1E6); NULL when the point
                         // has no location (segment marker / pause). See ContentProviderUtils.fillTrackPoint.
                         latitude = c.microdegreesOrNull(OpenTracksContract.TrackPoint.LATITUDE),
@@ -59,6 +60,11 @@ class OpenTracksReader(private val resolver: ContentResolver) {
     private fun Cursor.longOrNull(name: String): Long? {
         val i = getColumnIndex(name)
         return if (i < 0 || isNull(i)) null else getLong(i)
+    }
+
+    private fun Cursor.intOrNull(name: String): Int? {
+        val i = getColumnIndex(name)
+        return if (i < 0 || isNull(i)) null else getInt(i)
     }
 
     private fun Cursor.doubleOrNull(name: String): Double? {

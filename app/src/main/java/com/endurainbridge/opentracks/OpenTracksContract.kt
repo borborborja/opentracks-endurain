@@ -36,6 +36,17 @@ object OpenTracksContract {
         const val TOTAL_TIME = "duration_total"
     }
 
+    // TrackPoint.Type integer codes (TrackPoint.java). A trailing SEGMENT_END_MANUAL marks that
+    // recording has stopped (there is no pause feature, so it is unambiguous). IDLE is NOT a stop.
+    object TrackPointType {
+        const val SEGMENT_START_MANUAL = -2
+        const val SEGMENT_START_AUTOMATIC = -1
+        const val TRACKPOINT = 0
+        const val SEGMENT_END_MANUAL = 1
+        const val SENSORPOINT = 2
+        const val IDLE = 3
+    }
+
     // --- trackpoints table columns ---
     object TrackPoint {
         const val ID = "_id"

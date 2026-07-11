@@ -18,4 +18,10 @@
     <string name="notif_uploaded">Actividad subida a Endurain ✓</string>
     <string name="notif_upload_failed">Error al subir a Endurain</string>
     <string name="notif_skipped_duplicate">Actividad ya subida (omitida)</string>
+    <string name="notif_watching">Vigilando grabación de OpenTracks…</string>
+
+    <string name="toast_watching">Se subirá automáticamente al terminar la grabación</string>
+    <string name="toast_configure_first">Configura Endurain Bridge antes de usarlo como dashboard</string>
+    <string name="toast_no_data">OpenTracks no envió datos (¿Data API desactivada?)</string>
+    <string name="toast_read_failed">No se pudo leer la actividad de OpenTracks</string>
 </resources>

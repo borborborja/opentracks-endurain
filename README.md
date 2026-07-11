@@ -1,5 +1,7 @@
 # Endurain Bridge
 
+[![Build](https://github.com/borborborja/opentracks-endurain/actions/workflows/build.yml/badge.svg)](https://github.com/borborborja/opentracks-endurain/actions/workflows/build.yml)
+
 A small Android companion app that uploads activities recorded in **[OpenTracks]** to a self-hosted
 **[Endurain]** server. OpenTracks records the GPS track (background GPS, BLE sensors, barometer);
 this app reads the finished track over OpenTracks' **Dashboard/Data API**, serializes it to GPX, and

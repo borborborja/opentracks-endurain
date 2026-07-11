@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Downloaded APK for the in-app updater lives in the app's external cache. -->
+    <external-cache-path name="updates" path="updates/" />
+    <cache-path name="cache" path="/" />
+</paths>

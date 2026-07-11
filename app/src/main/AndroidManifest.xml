@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".App"
@@ -15,9 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EndurainBridge">
 
-        <!-- Launcher: settings (server URL + API key). Also the "test upload" entry point. -->
+        <!-- Launcher: tabbed UI (Ajustes | Historial). -->
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
@@ -26,11 +27,15 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.HistoryActivity"
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
-            android:parentActivityName=".ui.SettingsActivity"
-            android:label="@string/history_title" />
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <!-- Vía B: registers this app as an OpenTracks "dashboard". OpenTracks sends the
              dashboard payload (Track/TrackPoints/Markers content URIs) to this activity.

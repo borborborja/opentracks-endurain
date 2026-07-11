@@ -7,12 +7,19 @@ android {
     namespace = "com.endurainbridge"
     compileSdk = 35
 
+    // Version comes from CI (GitHub run number) so the in-app updater can compare builds.
+    // Local builds fall back to a dev version.
+    val ciVersionCode = (project.findProperty("versionCode") as String?)?.toIntOrNull() ?: 1
+    val ciVersionName = (project.findProperty("versionName") as String?) ?: "0.1.0-dev"
+
     defaultConfig {
         applicationId = "com.endurainbridge"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = ciVersionCode
+        versionName = ciVersionName
+        // Repo used by the in-app update checker (GitHub releases API).
+        buildConfigField("String", "UPDATE_REPO", "\"borborborja/opentracks-endurain\"")
     }
 
     // Stable release signing: keystore + passwords come from env vars (provided by CI secrets), so
@@ -55,6 +62,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -65,6 +73,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     implementation("androidx.activity:activity-ktx:1.9.3")
+    implementation("androidx.fragment:fragment-ktx:1.8.5")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation("androidx.lifecycle:lifecycle-service:2.8.7")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")

@@ -47,7 +47,10 @@ jobs:
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
-        run: ./gradlew assembleRelease --no-daemon --stacktrace
+        run: >-
+          ./gradlew assembleRelease --no-daemon --stacktrace
+          -PversionCode=${{ github.run_number }}
+          -PversionName=0.1.${{ github.run_number }}
 
       - name: Upload APK as workflow artifact
         uses: actions/upload-artifact@v4
@@ -61,8 +64,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           cp app/build/outputs/apk/release/app-release.apk Endurain-Bridge.apk
-          gh release delete latest --yes --cleanup-tag || true
-          gh release create latest Endurain-Bridge.apk \
-            --title "Latest signed APK" \
-            --notes "Signed APK built from ${{ github.sha }}. Install directly on your phone; reinstalling a newer build over it does not require uninstalling (same signing key)." \
+          TAG="v0.1.${{ github.run_number }}"
+          gh release create "$TAG" Endurain-Bridge.apk \
+            --title "$TAG" \
+            --notes "Signed APK (version $TAG) built from ${{ github.sha }}. Install directly on your phone; reinstalling over a previous build does not require uninstalling (same signing key). The app can also self-update from Ajustes → Buscar actualizaciones." \
             --latest

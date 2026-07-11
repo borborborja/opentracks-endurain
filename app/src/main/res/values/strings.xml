@@ -31,13 +31,29 @@
         <item quantity="other">Subiendo %d actividades a Endurain…</item>
     </plurals>
 
-    <string name="btn_history">Ver historial de subidas</string>
+    <string name="tab_settings">Ajustes</string>
+    <string name="tab_history">Historial</string>
+
+    <string name="settings_incomplete">Introduce la URL del servidor y la API key</string>
+    <string name="testing">Probando…</string>
+    <string name="debug_enqueued">GPX de prueba encolado para subida</string>
+
     <string name="history_title">Historial de subidas</string>
     <string name="history_empty">Aún no has subido ninguna actividad.</string>
     <string name="history_open_in_endurain">Ver en Endurain ↗</string>
     <string name="history_status_pending">⏳ Subiendo…</string>
     <string name="history_status_success">✓ Subida correctamente</string>
     <string name="history_status_failed">✗ Error: %1$s</string>
-    <string name="history_refresh">Refrescar</string>
     <string name="history_clear">Borrar historial</string>
+
+    <string name="update_current_version">Versión %1$s</string>
+    <string name="update_check">Buscar actualizaciones</string>
+    <string name="update_checking">Comprobando…</string>
+    <string name="update_up_to_date">Estás en la última versión ✓</string>
+    <string name="update_error">No se pudo comprobar: %1$s</string>
+    <string name="update_available">Actualización disponible: %1$s</string>
+    <string name="update_install">Descargar e instalar %1$s</string>
+    <string name="update_need_permission">Concede permiso para instalar apps y vuelve a pulsar</string>
+    <string name="update_downloading">Descargando actualización…</string>
+    <string name="update_download_failed">No se pudo descargar la actualización</string>
 </resources>

@@ -2,6 +2,8 @@ package com.endurainbridge.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.endurainbridge.R
 import com.endurainbridge.databinding.ActivityMainBinding
@@ -15,6 +17,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
+        // targetSdk 35 draws edge-to-edge: pad the root so the toolbar clears the status bar and the
+        // bottom navigation clears the gesture/navigation bar.
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+            insets
+        }
 
         binding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -31,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun show(fragment: Fragment, titleRes: Int) {
-        title = getString(titleRes)
+        supportActionBar?.title = getString(titleRes)
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .commit()

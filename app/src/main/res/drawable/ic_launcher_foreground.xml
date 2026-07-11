@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Simple upward arrow = "upload", drawn within the 72x72 adaptive safe zone. -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,30 L72,54 L60,54 L60,78 L48,78 L48,54 L36,54 Z" />
+</vector>

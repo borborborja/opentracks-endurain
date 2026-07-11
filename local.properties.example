@@ -1,0 +1,4 @@
+# Copy this file to `local.properties` (git-ignored) and set the path to your Android SDK.
+# Android Studio creates this automatically. For a command-line build, install the SDK first
+# (see README.md) and point sdk.dir at it, e.g.:
+sdk.dir=/Users/borja/Library/Android/sdk

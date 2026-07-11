@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.EndurainBridge" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/endurain_primary</item>
+    </style>
+
+    <!-- Transparent, chromeless theme for the invisible dashboard receiver activity. -->
+    <style name="Theme.EndurainBridge.Transparent" parent="Theme.EndurainBridge">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+</resources>

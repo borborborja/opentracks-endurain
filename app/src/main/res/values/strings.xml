@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Endurain Bridge</string>
+
+    <string name="settings_title">Endurain Bridge</string>
+    <string name="settings_intro">Sube las actividades grabadas en OpenTracks a tu servidor Endurain.</string>
+    <string name="label_server_url">URL del servidor Endurain</string>
+    <string name="hint_server_url">https://endurain.tu-dominio.com</string>
+    <string name="label_api_key">Clave de API (X-API-Key)</string>
+    <string name="hint_api_key">Pega aquí tu API key de Endurain</string>
+    <string name="btn_save">Guardar</string>
+    <string name="btn_test">Probar conexión</string>
+    <string name="saved">Ajustes guardados</string>
+    <string name="dashboard_hint">En OpenTracks: activa la Data API en Ajustes y selecciona «Endurain Bridge» en Ajustes → Dashboard.</string>
+
+    <string name="notif_channel_uploads">Subidas a Endurain</string>
+    <string name="notif_uploading">Subiendo actividad a Endurain…</string>
+    <string name="notif_uploaded">Actividad subida a Endurain ✓</string>
+    <string name="notif_upload_failed">Error al subir a Endurain</string>
+    <string name="notif_skipped_duplicate">Actividad ya subida (omitida)</string>
+</resources>

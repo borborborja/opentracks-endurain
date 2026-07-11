@@ -60,9 +60,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          APK=app/build/outputs/apk/release/app-release.apk
+          cp app/build/outputs/apk/release/app-release.apk Endurain-Bridge.apk
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest "$APK#Endurain-Bridge.apk" \
+          gh release create latest Endurain-Bridge.apk \
             --title "Latest signed APK" \
-            --notes "Signed debug/consistent-key APK built from ${{ github.sha }}. Install directly on your phone; reinstalling a newer build over it does not require uninstalling (same signing key)." \
+            --notes "Signed APK built from ${{ github.sha }}. Install directly on your phone; reinstalling a newer build over it does not require uninstalling (same signing key)." \
             --latest

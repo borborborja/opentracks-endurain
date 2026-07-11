@@ -15,8 +15,29 @@ android {
         versionName = "0.1.0"
     }
 
+    // Stable release signing: keystore + passwords come from env vars (provided by CI secrets), so
+    // every published APK is signed with the SAME key and can be reinstalled over a previous version
+    // without uninstalling. If the env vars are absent (e.g. a local build), the release falls back
+    // to the debug signing config so `assembleRelease` still works locally.
+    val releaseKeystore = System.getenv("SIGNING_KEYSTORE_PATH")
+    signingConfigs {
+        if (releaseKeystore != null) {
+            create("release") {
+                storeFile = file(releaseKeystore)
+                storePassword = System.getenv("SIGNING_STORE_PASSWORD")
+                keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+                keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = if (releaseKeystore != null) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

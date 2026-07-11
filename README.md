@@ -30,7 +30,10 @@ the device. Every request also sends the mandatory `X-Client-Type: mobile` heade
 1. **Generate an API key in Endurain** with the `activities:upload` scope (Settings → your profile →
    API keys in the Endurain web UI). Confirm your Endurain version exposes API-key auth on
    `POST /api/v1/activities/create/upload` (present on current versions).
-2. Install this app, open it, enter your **server URL** (e.g. `https://endurain.example.com`) and the
+2. Install this app — download **`Endurain-Bridge.apk`** from the
+   [latest release](https://github.com/borborborja/opentracks-endurain/releases/latest). Every
+   release is signed with the same key, so you can install a newer build over an older one **without
+   uninstalling**. Open it, enter your **server URL** (e.g. `https://endurain.example.com`) and the
    **API key**, tap **Probar conexión** to sanity-check reachability, then **Guardar**.
 3. In **OpenTracks**: Settings → enable the **Data API**, then Settings → **Dashboard** → select
    **Endurain Bridge**.

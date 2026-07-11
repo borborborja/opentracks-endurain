@@ -11,3 +11,7 @@
 *.apk
 *.keystore
 !debug.keystore
+
+# Signing material — never commit to this public repo (lives in GitHub Secrets instead)
+/signing/
+*.jks

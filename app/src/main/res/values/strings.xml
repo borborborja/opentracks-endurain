@@ -24,4 +24,10 @@
     <string name="toast_configure_first">Configura Endurain Bridge antes de usarlo como dashboard</string>
     <string name="toast_no_data">OpenTracks no envió datos (¿Data API desactivada?)</string>
     <string name="toast_read_failed">No se pudo leer la actividad de OpenTracks</string>
+    <string name="toast_share_mixed">Encoladas %1$d · omitidas %2$d · fallidas %3$d</string>
+
+    <plurals name="share_enqueued">
+        <item quantity="one">Subiendo la actividad a Endurain…</item>
+        <item quantity="other">Subiendo %d actividades a Endurain…</item>
+    </plurals>
 </resources>

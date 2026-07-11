@@ -14,12 +14,20 @@ class OpenTracksReader(private val resolver: ContentResolver) {
     fun readTrack(trackUri: Uri): TrackSummary? {
         resolver.query(trackUri, null, null, null, null)?.use { c ->
             if (!c.moveToFirst()) return null
+            val startTime = c.longOrNull(OpenTracksContract.Track.START_TIME) ?: 0L
+            val id = c.longOrNull(OpenTracksContract.Track.ID)
+            // The dashboard projection has no `uuid`; derive a stable dedup key from start time.
+            val dedupKey = when {
+                startTime > 0 -> "otstart:$startTime"
+                id != null -> "otid:$id"
+                else -> return null
+            }
             return TrackSummary(
-                uuid = c.stringOrNull(OpenTracksContract.Track.UUID) ?: return null,
+                dedupKey = dedupKey,
                 name = c.stringOrNull(OpenTracksContract.Track.NAME).orEmpty(),
                 description = c.stringOrNull(OpenTracksContract.Track.DESCRIPTION).orEmpty(),
                 activityType = c.stringOrNull(OpenTracksContract.Track.ACTIVITY_TYPE).orEmpty(),
-                startTimeEpochMs = c.longOrNull(OpenTracksContract.Track.START_TIME) ?: 0L,
+                startTimeEpochMs = startTime,
             )
         }
         return null

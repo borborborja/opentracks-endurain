@@ -33,17 +33,17 @@ object TrackUploadPreparer {
         val track = reader.readTrack(trackUri) ?: return Result.NoData
 
         val ledger = UploadLedger(context)
-        val displayName = track.name.ifBlank { track.uuid }
-        if (ledger.isUploaded(track.uuid)) return Result.Duplicate(displayName)
+        val displayName = track.name.ifBlank { "OpenTracks activity" }
+        if (ledger.isUploaded(track.dedupKey)) return Result.Duplicate(displayName)
 
         val points = reader.readTrackPoints(trackPointsUri)
         if (points.none { it.hasLocation }) return Result.NoData
 
-        val fileName = safeFileName(track.name.ifBlank { "activity-${track.uuid}" }) + ".gpx"
-        val outFile = File(context.cacheDir, "ot-${track.uuid}.gpx")
+        val fileName = safeFileName(track.name.ifBlank { "activity" }) + ".gpx"
+        val outFile = File(context.cacheDir, "ot-${track.dedupKey.replace(':', '-')}.gpx")
         GpxWriter.writeToFile(track, points, outFile)
 
-        UploadEnqueuer.enqueue(context, outFile, fileName, track.uuid)
+        UploadEnqueuer.enqueue(context, outFile, fileName, track.dedupKey)
         return Result.Enqueued(displayName)
     }
 

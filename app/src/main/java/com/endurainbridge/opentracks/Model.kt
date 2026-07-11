@@ -1,8 +1,12 @@
 package com.endurainbridge.opentracks
 
-/** Track summary read from the OpenTracks `tracks` content URI. */
+/**
+ * Track summary read from the OpenTracks `tracks` dashboard content URI. Note the dashboard
+ * projection does NOT expose the track `uuid`, so [dedupKey] is derived from the start time
+ * (stable per activity) instead.
+ */
 data class TrackSummary(
-    val uuid: String,
+    val dedupKey: String,
     val name: String,
     val description: String,
     val activityType: String,

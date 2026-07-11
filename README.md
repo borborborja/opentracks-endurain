@@ -37,11 +37,15 @@ the device. Every request also sends the mandatory `X-Client-Type: mobile` heade
    **API key**, tap **Probar conexión** to sanity-check reachability, then **Guardar**.
 3. In **OpenTracks**: Settings → enable the **Data API**, then Settings → **Dashboard** → select
    **Endurain Bridge**.
-4. Record an activity. Two ways it uploads:
-   - **Auto (recommended):** during the recording, tap OpenTracks' **⋮ → Show on map** once. Nothing
-     visible opens, but a foreground service now watches the recording; when you **Stop**, the track
-     uploads by itself — no need to reopen anything.
-   - **Manual:** after stopping, open the finished track and tap **⋮ → Show on map**; it uploads then.
+4. Record an activity. Three ways it uploads:
+   - **Share (recommended, simplest):** open the track in OpenTracks → **⋮ → Export / Share → GPX**
+     → pick **Endurain Bridge** from the share sheet. This uses the full GPX OpenTracks generates
+     (includes elevation + heart rate/cadence/power) and leaves **Show on map** free for your map app.
+   - **Auto on stop:** during the recording, tap **⋮ → Show on map** once and pick Endurain Bridge; a
+     foreground service then watches the recording and uploads by itself when you **Stop**.
+   - **Manual dashboard:** after stopping, open the finished track → **⋮ → Show on map → Endurain
+     Bridge**. (Note: the dashboard path only receives lat/lon/time/speed — OpenTracks does not expose
+     elevation or sensor data to dashboards; use Share if you want those.)
 
 > **Duplicates:** Endurain does *not* deduplicate uploads server-side — re-uploading a file creates a
 > hidden duplicate activity. This app keeps a local ledger of uploaded OpenTracks track UUIDs and
@@ -97,8 +101,8 @@ like this:
 
 ## Roadmap
 
-- Optional Vía A (Android share-sheet) entry point.
 - Mapping OpenTracks categories → Endurain numeric activity types via `PUT /api/v1/activities/edit`.
+- Optionally accept shared KML/KMZ, not just GPX.
 
 ## Key API facts (confirmed from source)
 

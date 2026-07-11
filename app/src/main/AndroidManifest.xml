@@ -41,6 +41,27 @@
             </intent-filter>
         </activity>
 
+        <!-- Vía A: appears in Android's "Share" sheet for GPX files. Share a track from OpenTracks
+             (⋮ → Export/Share → GPX → Endurain Bridge) to upload it, without touching "Show on map". -->
+        <activity
+            android:name=".ui.ShareReceiverActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.EndurainBridge.Transparent">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/gpx+xml" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/gpx+xml" />
+            </intent-filter>
+        </activity>
+
         <!-- Holds the OpenTracks URI grant during a recording and uploads when it stops (M4). -->
         <service
             android:name=".upload.RecordingWatchService"

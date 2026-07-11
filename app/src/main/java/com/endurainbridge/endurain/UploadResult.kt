@@ -2,8 +2,8 @@ package com.endurainbridge.endurain
 
 /** Outcome of a single upload attempt. Distinguishes retriable failures from permanent ones. */
 sealed interface UploadResult {
-    /** HTTP 2xx (Endurain returns 201). */
-    data class Success(val httpCode: Int) : UploadResult
+    /** HTTP 2xx (Endurain returns 201). [endurainId] is the created activity id, if parseable. */
+    data class Success(val httpCode: Int, val endurainId: Long?) : UploadResult
 
     /** Server/network problems worth retrying (5xx, timeouts, no connectivity). */
     data class ServerError(val httpCode: Int, val body: String) : UploadResult

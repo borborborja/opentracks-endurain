@@ -76,6 +76,14 @@
             android:layout_marginTop="16dp"
             android:textAppearance="?attr/textAppearanceBodySmall" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnHistory"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/btn_history" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -26,6 +26,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.HistoryActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.SettingsActivity"
+            android:label="@string/history_title" />
+
         <!-- Vía B: registers this app as an OpenTracks "dashboard". OpenTracks sends the
              dashboard payload (Track/TrackPoints/Markers content URIs) to this activity.
              Action string confirmed from OpenTracks publicapi/DataProvider.java. -->

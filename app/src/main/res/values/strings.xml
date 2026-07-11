@@ -30,4 +30,14 @@
         <item quantity="one">Subiendo la actividad a Endurain…</item>
         <item quantity="other">Subiendo %d actividades a Endurain…</item>
     </plurals>
+
+    <string name="btn_history">Ver historial de subidas</string>
+    <string name="history_title">Historial de subidas</string>
+    <string name="history_empty">Aún no has subido ninguna actividad.</string>
+    <string name="history_open_in_endurain">Ver en Endurain ↗</string>
+    <string name="history_status_pending">⏳ Subiendo…</string>
+    <string name="history_status_success">✓ Subida correctamente</string>
+    <string name="history_status_failed">✗ Error: %1$s</string>
+    <string name="history_refresh">Refrescar</string>
+    <string name="history_clear">Borrar historial</string>
 </resources>

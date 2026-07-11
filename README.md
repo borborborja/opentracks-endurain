@@ -47,6 +47,9 @@ the device. Every request also sends the mandatory `X-Client-Type: mobile` heade
      Bridge**. (Note: the dashboard path only receives lat/lon/time/speed — OpenTracks does not expose
      elevation or sensor data to dashboards; use Share if you want those.)
 
+5. Check **"Ver historial de subidas"** in the app to see each upload's status (uploading / uploaded /
+   error) with a **Ver en Endurain ↗** link that opens the activity at `<server>/activity/<id>`.
+
 > **Duplicates:** Endurain does *not* deduplicate uploads server-side — re-uploading a file creates a
 > hidden duplicate activity. This app keeps a local ledger of uploaded OpenTracks track UUIDs and
 > skips anything already sent.

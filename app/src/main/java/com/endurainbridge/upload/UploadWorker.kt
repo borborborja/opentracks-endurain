@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.endurainbridge.data.Settings
+import com.endurainbridge.data.UploadHistory
 import com.endurainbridge.dedup.UploadLedger
 import com.endurainbridge.endurain.EndurainClient
 import com.endurainbridge.endurain.UploadResult
@@ -26,9 +27,14 @@ class UploadWorker(
             ?: return@withContext Result.failure()
         val displayName = inputData.getString(KEY_DISPLAY_NAME) ?: "activity.gpx"
         val trackUuid = inputData.getString(KEY_TRACK_UUID).orEmpty()
+        val historyId = inputData.getString(KEY_HISTORY_ID).orEmpty()
+        val history = UploadHistory(applicationContext)
 
         val file = File(filePath)
-        if (!file.exists()) return@withContext Result.failure()
+        if (!file.exists()) {
+            if (historyId.isNotBlank()) history.markFailed(historyId, "Fichero no encontrado")
+            return@withContext Result.failure()
+        }
 
         val settings = Settings.get(applicationContext)
         val client = EndurainClient(settings)
@@ -36,6 +42,7 @@ class UploadWorker(
         when (val result = client.uploadGpx(file, displayName)) {
             is UploadResult.Success -> {
                 if (trackUuid.isNotBlank()) UploadLedger(applicationContext).markUploaded(trackUuid)
+                if (historyId.isNotBlank()) history.markSuccess(historyId, result.endurainId)
                 file.delete()
                 Notifications.showResult(
                     applicationContext,
@@ -48,6 +55,7 @@ class UploadWorker(
             is UploadResult.ServerError, is UploadResult.NetworkError -> {
                 if (runAttemptCount >= MAX_ATTEMPTS) {
                     file.delete()
+                    if (historyId.isNotBlank()) history.markFailed(historyId, describe(result))
                     Notifications.showResult(
                         applicationContext,
                         applicationContext.getString(com.endurainbridge.R.string.notif_upload_failed),
@@ -62,6 +70,7 @@ class UploadWorker(
             else -> {
                 // AuthError / RejectedError / ConfigError — retrying won't help.
                 file.delete()
+                if (historyId.isNotBlank()) history.markFailed(historyId, describe(result))
                 Notifications.showResult(
                     applicationContext,
                     applicationContext.getString(com.endurainbridge.R.string.notif_upload_failed),
@@ -85,6 +94,7 @@ class UploadWorker(
         const val KEY_FILE_PATH = "file_path"
         const val KEY_DISPLAY_NAME = "display_name"
         const val KEY_TRACK_UUID = "track_uuid"
+        const val KEY_HISTORY_ID = "history_id"
         private const val MAX_ATTEMPTS = 5
     }
 }

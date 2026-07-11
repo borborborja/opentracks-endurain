@@ -57,7 +57,8 @@ class EndurainClient(private val settings: Settings) {
         return try {
             http.newCall(request).execute().use { response ->
                 when {
-                    response.isSuccessful -> UploadResult.Success(response.code)
+                    response.isSuccessful ->
+                        UploadResult.Success(response.code, parseActivityId(response.body?.string()))
                     response.code == 401 || response.code == 403 ->
                         UploadResult.AuthError(response.code, response.body?.string().orEmpty())
                     response.code in 400..499 ->
@@ -98,6 +99,23 @@ class EndurainClient(private val settings: Settings) {
         } catch (e: IOException) {
             TestResult.Failure("No se pudo conectar: ${e.message ?: e.javaClass.simpleName}")
         }
+    }
+
+    /**
+     * The upload endpoint returns a JSON array of created Activity objects (a file may yield more
+     * than one). Extract the first activity's `id` for deep-linking; returns null if not parseable.
+     */
+    private fun parseActivityId(body: String?): Long? {
+        if (body.isNullOrBlank()) return null
+        return runCatching {
+            val trimmed = body.trimStart()
+            val first = if (trimmed.startsWith("[")) {
+                org.json.JSONArray(body).optJSONObject(0)
+            } else {
+                org.json.JSONObject(body)
+            }
+            first?.takeIf { it.has("id") && !it.isNull("id") }?.getLong("id")
+        }.getOrNull()
     }
 
     companion object {

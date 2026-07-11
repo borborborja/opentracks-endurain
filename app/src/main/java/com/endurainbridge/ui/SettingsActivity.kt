@@ -42,6 +42,9 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.btnSave.setOnClickListener { save() }
         binding.btnTest.setOnClickListener { testConnection() }
+        binding.btnHistory.setOnClickListener {
+            startActivity(android.content.Intent(this, HistoryActivity::class.java))
+        }
 
         // Long-press "Probar conexión" to run the debug GPX upload.
         binding.btnTest.setOnLongClickListener {

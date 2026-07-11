@@ -8,6 +8,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.endurainbridge.data.UploadHistory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -18,10 +19,12 @@ object UploadEnqueuer {
      * track UUID so re-triggering the same track does not run concurrent duplicate uploads.
      */
     fun enqueue(context: Context, gpxFile: File, displayName: String, trackUuid: String) {
+        val historyId = UploadHistory(context).add(displayName, System.currentTimeMillis())
         val data = Data.Builder()
             .putString(UploadWorker.KEY_FILE_PATH, gpxFile.absolutePath)
             .putString(UploadWorker.KEY_DISPLAY_NAME, displayName)
             .putString(UploadWorker.KEY_TRACK_UUID, trackUuid)
+            .putString(UploadWorker.KEY_HISTORY_ID, historyId)
             .build()
 
         val request = OneTimeWorkRequestBuilder<UploadWorker>()
